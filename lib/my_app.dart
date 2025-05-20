@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/utils/routes/routes.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
-import 'package:moallim_mate/view/dashboard.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFFFF7518),
+          seedColor: AppColors.primary,
           brightness: Brightness.light,
         ),
       ),

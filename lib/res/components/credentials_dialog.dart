@@ -18,7 +18,9 @@ class CredentialsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text('Update Credentials'),
+      title: Center(
+        child: Text('Update Credentials', style: TextStyle(fontSize: 16)),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

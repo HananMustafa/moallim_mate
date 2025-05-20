@@ -20,7 +20,7 @@ class BuildInputField extends StatelessWidget {
       obscureText: isPassword,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: AppColors.grey),
+        labelStyle: TextStyle(color: AppColors.grey, fontSize: 14),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.primary),
           borderRadius: BorderRadius.circular(8),
