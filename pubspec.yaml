@@ -38,6 +38,7 @@ dependencies:
   http: ^1.4.0
   another_flushbar: ^1.12.30
   provider: ^6.1.5
+  flutter_speed_dial: ^7.0.0
 
 dev_dependencies:
   flutter_test:

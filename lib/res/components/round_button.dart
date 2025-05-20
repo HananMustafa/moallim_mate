@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:moallim_mate/res/components/color.dart';
+import 'package:moallim_mate/res/color.dart';
 
 class RoundButton extends StatelessWidget {
   final String title;
   final bool loading;
   final VoidCallback onPress;
+
   const RoundButton({
     required this.title,
     this.loading = false,
@@ -20,7 +21,7 @@ class RoundButton extends StatelessWidget {
         height: 40,
         width: 200,
         decoration: BoxDecoration(
-          color: AppColors.buttonColor,
+          color: AppColors.primary,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
