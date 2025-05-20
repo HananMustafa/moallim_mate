@@ -18,6 +18,9 @@ class _DashboardState extends State<Dashboard> {
         title: Text(widget.title),
       ),
       body: Center(child: Text('Hi')),
+
+      //Navigation Syntax
+      //Navigator.pushNamed(context, RouteName.SCREENNAME);
     );
   }
 }

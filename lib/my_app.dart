@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:moallim_mate/dashboard.dart';
+import 'package:moallim_mate/utils/routes/routes.dart';
+import 'package:moallim_mate/utils/routes/routes_name.dart';
+import 'package:moallim_mate/view/dashboard.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +17,9 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
       ),
-      home: const Dashboard(title: 'Moallim Mate'),
+      // home: const Dashboard(title: 'Moallim Mate'),
+      initialRoute: RoutesName.dashboard,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }
