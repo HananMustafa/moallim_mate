@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:moallim_mate/res/components/build_info_row.dart';
 import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
+import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ConnectMoellim extends StatefulWidget {
   const ConnectMoellim({super.key});
@@ -16,6 +18,10 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
 
   @override
   Widget build(BuildContext context) {
+    final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
+      context,
+    );
+
     void _showCredentialDialog(BuildContext context) {
       final usernameController = TextEditingController();
       final passwordController = TextEditingController();
@@ -27,9 +33,18 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             usernameController: usernameController,
             passwordController: passwordController,
             onSave: () {
+              Map data = {
+                'username': _usernameController.text.toString(),
+                'password': _passwordController.text.toString(),
+              };
+
+              ConnectMoellimViewModel X = new ConnectMoellimViewModel();
+
+              X.ConnectMoellimApi(data, context);
               // Call ViewModel function here to handle logic
               // viewModel.updateCredentials(usernameController.text, passwordController.text);
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              print('Api hit');
             },
           );
         },
