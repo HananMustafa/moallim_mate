@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moallim_mate/res/color.dart';
+import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
+import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -20,7 +22,20 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(child: Text('Dashboard')),
+      body: Center(
+        child: RoundButton(
+          title: 'Get Events',
+          loading: ConnectMoellimViewModel().getEventLoading,
+          onPress: () {
+            Map data = {'token': 'acdbc014b732ff3958862cd269a5c612'};
+
+            ConnectMoellimViewModel X = new ConnectMoellimViewModel();
+
+            X.GetEventsApi(data, context);
+          },
+        ),
+      ),
+
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
