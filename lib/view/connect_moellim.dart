@@ -33,6 +33,8 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             usernameController: usernameController,
             passwordController: passwordController,
             onSave: () {
+              print('USERNAME: ${_usernameController.text.toString()}');
+              print('PASSWORD: ${_passwordController.text.toString()}');
               Map data = {
                 'username': _usernameController.text.toString(),
                 'password': _passwordController.text.toString(),

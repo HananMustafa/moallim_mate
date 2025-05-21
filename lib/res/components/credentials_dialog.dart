@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moallim_mate/res/components/build_input_field.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
+import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 
 class CredentialsDialog extends StatelessWidget {
   final TextEditingController usernameController;
@@ -33,7 +34,13 @@ class CredentialsDialog extends StatelessWidget {
           ),
         ],
       ),
-      actions: [RoundButton(title: 'Save', onPress: onSave)],
+      actions: [
+        RoundButton(
+          title: 'Save',
+          loading: ConnectMoellimViewModel().loading,
+          onPress: onSave,
+        ),
+      ],
     );
   }
 }

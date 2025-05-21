@@ -30,14 +30,10 @@ class NetworkApiService extends BaseApiServices {
           .timeout(Duration(seconds: 10));
 
       responseJson = returnResponse(response);
-    } catch (e) {
-      print('error: $e');
+      print('response json::: $responseJson');
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
     }
-
-    // on SocketException {
-    //   print('4');
-    //   throw FetchDataException('No Internet Connection');
-    // }
     return responseJson;
   }
 
