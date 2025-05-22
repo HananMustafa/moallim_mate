@@ -4,6 +4,7 @@ import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
+import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,6 +17,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // Call DashboardServices to check token
+    CheckSharedPreferences.checkTokenStatus(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(

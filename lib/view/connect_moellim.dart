@@ -3,6 +3,7 @@ import 'package:moallim_mate/res/components/build_info_row.dart';
 import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
+import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:provider/provider.dart';
 
 class ConnectMoellim extends StatefulWidget {
@@ -13,6 +14,24 @@ class ConnectMoellim extends StatefulWidget {
 }
 
 class _ConnectMoellimState extends State<ConnectMoellim> {
+  String username = '';
+  String password = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserCredentials();
+  }
+
+  // I AM REALLY SORRY FOR WRITING THIS CODE. PLEASE MODIFY IT, AND USE PROVIDER INSTEAD
+  void loadUserCredentials() async {
+    final credentials = await CheckSharedPreferences.checkCredentialsStatus();
+    setState(() {
+      username = credentials['username']!;
+      password = credentials['password']!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
@@ -71,9 +90,9 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BuildInfoRow(title: 'Username', value: 'xyz'),
+                    BuildInfoRow(title: 'Username', value: username),
                     SizedBox(height: 16),
-                    BuildInfoRow(title: 'Password', value: '******'),
+                    BuildInfoRow(title: 'Password', value: password),
                   ],
                 ),
               ),
