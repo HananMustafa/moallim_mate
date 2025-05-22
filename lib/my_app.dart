@@ -3,6 +3,7 @@ import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/utils/routes/routes.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
+import 'package:moallim_mate/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ConnectMoellimViewModel()),
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
       ],
       child: MaterialApp(
         title: 'Moallim Mate',
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // home: const Dashboard(title: 'Moallim Mate'),
-        initialRoute: RoutesName.dashboard,
+        initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),
     );
