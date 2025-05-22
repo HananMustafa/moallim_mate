@@ -13,9 +13,6 @@ class ConnectMoellim extends StatefulWidget {
 }
 
 class _ConnectMoellimState extends State<ConnectMoellim> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
@@ -33,20 +30,17 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             usernameController: usernameController,
             passwordController: passwordController,
             onSave: () {
-              print('USERNAME: ${_usernameController.text.toString()}');
-              print('PASSWORD: ${_passwordController.text.toString()}');
+              print('USERNAME: ${usernameController.text.toString()}');
+              print('PASSWORD: ${passwordController.text.toString()}');
               Map data = {
-                'username': _usernameController.text.toString(),
-                'password': _passwordController.text.toString(),
+                'username': usernameController.text.toString(),
+                'password': passwordController.text.toString(),
               };
 
-              ConnectMoellimViewModel X = new ConnectMoellimViewModel();
-
-              X.ConnectMoellimApi(data, context);
-              // Call ViewModel function here to handle logic
-              // viewModel.updateCredentials(usernameController.text, passwordController.text);
-              // Navigator.of(context).pop();
-              print('Api hit');
+              final connectMoellimViewModel =
+                  Provider.of<ConnectMoellimViewModel>(context, listen: false);
+              connectMoellimViewModel.ConnectMoellimApi(data, context);
+              // print('Api hit');
             },
           );
         },
