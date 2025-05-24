@@ -49,11 +49,13 @@ class _DashboardState extends State<Dashboard> {
                   Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
               onPress: () async {
                 // Getting Token
+                print('ACTION: GETTING TOKEN');
                 SharedPreferences sp = await SharedPreferences.getInstance();
                 String? token = sp.getString('token');
                 Map data = {'token': token};
 
                 // Hitting Get Events Api
+                print('ACTION: HITTING GET EVENTS API');
                 final connectMoellimViewModel =
                     Provider.of<ConnectMoellimViewModel>(
                       context,
@@ -62,6 +64,7 @@ class _DashboardState extends State<Dashboard> {
                 await connectMoellimViewModel.GetEventsApi(data, context);
 
                 // Getting Events Data from Shared Preferences
+                print('ACTION: EXTRACTING EVENTS FROM SP');
                 final eventViewModel = Provider.of<EventViewModel>(
                   context,
                   listen: false,
@@ -76,33 +79,6 @@ class _DashboardState extends State<Dashboard> {
                 }
               },
             ),
-
-            // SizedBox(height: 20),
-
-            // // EXTRACT EVENTS FROM SHARED PREFERENCES
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     final eventViewModel = Provider.of<EventViewModel>(
-            //       context,
-            //       listen: false,
-            //     );
-            //     final event = await eventViewModel.getEvent();
-            //     if (event != null) {
-            //       print(
-            //         'Events extracted from shared preferences: ${event.toJson()}',
-            //       );
-            //       // You can use setState to display in a Text widget if you want
-            //       Utils.flushbarSuccessMessages(
-            //         'Event loaded & printed in debug',
-            //         context,
-            //       );
-            //     } else {
-            //       print('No event found in shared preferences');
-            //       Utils.flushbarErrorMessages('No event found', context);
-            //     }
-            //   },
-            //   child: const Text('Print Events from SharedPreferences'),
-            // ),
           ],
         ),
       ),

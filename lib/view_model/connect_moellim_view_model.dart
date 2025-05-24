@@ -54,32 +54,59 @@ class ConnectMoellimViewModel with ChangeNotifier {
   }
 
   Future<void> GetEventsApi(dynamic data, BuildContext context) async {
-    setGetEventLoading(true);
-    _myRepo
-        .getEvents(data)
-        .then((value) async {
-          setGetEventLoading(false);
+    try {
+      setGetEventLoading(true);
 
-          // Parse the JSON to EventModel
-          EventModel eventModel = EventModel.fromJson(value);
+      // Await the API call
+      final value = await _myRepo.getEvents(data);
 
-          // Save to shared preferences using EventViewModel
-          await Provider.of<EventViewModel>(
-            context,
-            listen: false,
-          ).saveEvent(eventModel);
+      // Parse the JSON to EventModel
+      EventModel eventModel = EventModel.fromJson(value);
 
-          // Print for debug
-          print('Saved EventModel: ${eventModel.toJson()}');
+      // Await saving to SharedPreferences
+      await Provider.of<EventViewModel>(
+        context,
+        listen: false,
+      ).saveEvent(eventModel);
 
-          Utils.flushbarSuccessMessages(
-            'Events Saved to SharedPreferences',
-            context,
-          );
-        })
-        .onError((error, stackTrace) {
-          setGetEventLoading(false);
-          Utils.flushbarErrorMessages(error.toString(), context);
-        });
+      print('Saved EventModel: ${eventModel.toJson()}');
+
+      Utils.flushbarSuccessMessages(
+        'Events Saved to SharedPreferences',
+        context,
+      );
+    } catch (error) {
+      Utils.flushbarErrorMessages(error.toString(), context);
+    } finally {
+      setGetEventLoading(false);
+    }
+
+    // setGetEventLoading(true);
+    // _myRepo
+    //     .getEvents(data)
+    //     .then((value) async {
+    //       setGetEventLoading(false);
+
+    //       // Parse the JSON to EventModel
+    //       EventModel eventModel = EventModel.fromJson(value);
+
+    //       // Save to shared preferences using EventViewModel
+    //       await Provider.of<EventViewModel>(
+    //         context,
+    //         listen: false,
+    //       ).saveEvent(eventModel);
+
+    //       // Print for debug
+    //       print('Saved EventModel: ${eventModel.toJson()}');
+
+    //       Utils.flushbarSuccessMessages(
+    //         'Events Saved to SharedPreferences',
+    //         context,
+    //       );
+    //     })
+    //     .onError((error, stackTrace) {
+    //       setGetEventLoading(false);
+    //       Utils.flushbarErrorMessages(error.toString(), context);
+    //     });
   }
 }
