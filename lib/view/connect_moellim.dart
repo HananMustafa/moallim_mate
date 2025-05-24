@@ -48,7 +48,7 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
           return CredentialsDialog(
             usernameController: usernameController,
             passwordController: passwordController,
-            onSave: () {
+            onSave: () async {
               print('USERNAME: ${usernameController.text.toString()}');
               print('PASSWORD: ${passwordController.text.toString()}');
               Map data = {
@@ -58,8 +58,9 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
 
               final connectMoellimViewModel =
                   Provider.of<ConnectMoellimViewModel>(context, listen: false);
-              connectMoellimViewModel.ConnectMoellimApi(data, context);
+              await connectMoellimViewModel.ConnectMoellimApi(data, context);
               // print('Api hit');
+              // Navigator.of(context).pop();
             },
           );
         },

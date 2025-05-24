@@ -34,10 +34,6 @@ class ConnectMoellimViewModel with ChangeNotifier {
           print(value.toString());
           Utils.flushbarSuccessMessages(value.toString(), context);
 
-          //Look an eye on raasta-flutter, after signup, where exactly i am saving user data in shared preferences
-          //I guess, its viewmodel, where i am saving it
-          //confirm from there, then save user token in shared preferences below!
-
           String token = value['token'];
           String username = value['username'];
           String password = value['password'];
