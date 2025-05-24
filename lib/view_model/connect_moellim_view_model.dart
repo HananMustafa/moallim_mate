@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:moallim_mate/model/event_model.dart';
 import 'package:moallim_mate/repository/connect_moellim_repository.dart';
 import 'package:moallim_mate/utils/utils.dart';
+import 'package:moallim_mate/view_model/event_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConnectMoellimViewModel with ChangeNotifier {
@@ -54,10 +57,25 @@ class ConnectMoellimViewModel with ChangeNotifier {
     setGetEventLoading(true);
     _myRepo
         .getEvents(data)
-        .then((value) {
+        .then((value) async {
           setGetEventLoading(false);
-          print(value.toString());
-          Utils.flushbarSuccessMessages(value.toString(), context);
+
+          // Parse the JSON to EventModel
+          EventModel eventModel = EventModel.fromJson(value);
+
+          // Save to shared preferences using EventViewModel
+          await Provider.of<EventViewModel>(
+            context,
+            listen: false,
+          ).saveEvent(eventModel);
+
+          // Print for debug
+          print('Saved EventModel: ${eventModel.toJson()}');
+
+          Utils.flushbarSuccessMessages(
+            'Events Saved to SharedPreferences',
+            context,
+          );
         })
         .onError((error, stackTrace) {
           setGetEventLoading(false);

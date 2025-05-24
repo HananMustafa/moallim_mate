@@ -3,9 +3,12 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
+import 'package:moallim_mate/utils/utils.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
+import 'package:moallim_mate/view_model/event_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -38,18 +41,69 @@ class _DashboardState extends State<Dashboard> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: RoundButton(
-          title: 'Get Events',
-          loading:
-              Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
-          onPress: () {
-            Map data = {'token': 'acdbc014b732ff3958862cd269a5c612'};
+        child: Column(
+          children: [
+            RoundButton(
+              title: 'Get Events',
+              loading:
+                  Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
+              onPress: () async {
+                // Getting Token
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                String? token = sp.getString('token');
+                Map data = {'token': token};
 
-            final connectMoellimViewModel =
-                Provider.of<ConnectMoellimViewModel>(context, listen: false);
+                // Hitting Get Events Api
+                final connectMoellimViewModel =
+                    Provider.of<ConnectMoellimViewModel>(
+                      context,
+                      listen: false,
+                    );
+                await connectMoellimViewModel.GetEventsApi(data, context);
 
-            connectMoellimViewModel.GetEventsApi(data, context);
-          },
+                // Getting Events Data from Shared Preferences
+                final eventViewModel = Provider.of<EventViewModel>(
+                  context,
+                  listen: false,
+                );
+                final event = await eventViewModel.getEvent();
+                if (event != null) {
+                  print(
+                    'Events extracted from shared preferences: ${event.toJson()}',
+                  );
+                } else {
+                  print('No event found in shared preferences');
+                }
+              },
+            ),
+
+            // SizedBox(height: 20),
+
+            // // EXTRACT EVENTS FROM SHARED PREFERENCES
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final eventViewModel = Provider.of<EventViewModel>(
+            //       context,
+            //       listen: false,
+            //     );
+            //     final event = await eventViewModel.getEvent();
+            //     if (event != null) {
+            //       print(
+            //         'Events extracted from shared preferences: ${event.toJson()}',
+            //       );
+            //       // You can use setState to display in a Text widget if you want
+            //       Utils.flushbarSuccessMessages(
+            //         'Event loaded & printed in debug',
+            //         context,
+            //       );
+            //     } else {
+            //       print('No event found in shared preferences');
+            //       Utils.flushbarErrorMessages('No event found', context);
+            //     }
+            //   },
+            //   child: const Text('Print Events from SharedPreferences'),
+            // ),
+          ],
         ),
       ),
 
