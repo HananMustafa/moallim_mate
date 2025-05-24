@@ -20,13 +20,23 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  Future<List<dynamic>>? _futureEvents;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    // Call DashboardServices to check token
     CheckSharedPreferences.checkTokenStatus(context);
+    _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
+  }
+
+  Future<List<dynamic>> fetchEvents() async {
+    final eventViewModel = Provider.of<EventViewModel>(context, listen: false);
+    final event = await eventViewModel.getEvent();
+    if (event != null) {
+      // Assuming `event.toJson()` returns a map with 'json' as key
+      return event.toJson()['json'] ?? [];
+    }
+    return [];
   }
 
   @override
@@ -45,51 +55,156 @@ class _DashboardState extends State<Dashboard> {
           children: [
             RoundButton(
               title: 'Get Events',
-              loading:
-                  Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
+              loading: connectMoellimViewModel.getEventLoading,
               onPress: () async {
-                // Getting Token
-                print('ACTION: GETTING TOKEN');
                 SharedPreferences sp = await SharedPreferences.getInstance();
                 String? token = sp.getString('token');
                 Map data = {'token': token};
 
-                // Hitting Get Events Api
-                print('ACTION: HITTING GET EVENTS API');
-                final connectMoellimViewModel =
-                    Provider.of<ConnectMoellimViewModel>(
-                      context,
-                      listen: false,
-                    );
                 await connectMoellimViewModel.GetEventsApi(data, context);
 
-                // Getting Events Data from Shared Preferences
-                print('ACTION: EXTRACTING EVENTS FROM SP');
-                final eventViewModel = Provider.of<EventViewModel>(
-                  context,
-                  listen: false,
-                );
-                final event = await eventViewModel.getEvent();
-                if (event != null) {
-                  print(
-                    'Events extracted from shared preferences: ${event.toJson()}',
-                  );
-                } else {
-                  print('No event found in shared preferences');
-                }
+                setState(() {
+                  _futureEvents =
+                      fetchEvents(); // Trigger fetching after API call
+                });
               },
+            ),
+            const SizedBox(height: 20),
+
+            /// Display events using FutureBuilder
+            Expanded(
+              child:
+                  _futureEvents == null
+                      ? Text('Press the button to load events.')
+                      : FutureBuilder<List<dynamic>>(
+                        future: _futureEvents,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const Text('No events found.');
+                          }
+
+                          final events = snapshot.data!;
+                          return ListView.builder(
+                            itemCount: events.length,
+                            itemBuilder: (context, index) {
+                              final event = events[index];
+                              return Card(
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                elevation: 4,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Course Name: ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  event['coursefullname'] ?? '',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Title: ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(text: event['name'] ?? ''),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Type: ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: event['modulename'] ?? '',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Instructions: ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: event['description'] ?? '',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Due Date: ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: _formatUnixTimestamp(
+                                                event['timestart'],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
             ),
           ],
         ),
       ),
-
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
         backgroundColor: AppColors.primary,
         children: [
           SpeedDialChild(
-            child: Icon(Icons.sync),
+            child: const Icon(Icons.sync),
             label: 'Connect Moellim',
             onTap: () {
               Navigator.pushNamed(context, RoutesName.connectMoellim);
@@ -99,4 +214,91 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
+
+  /// Converts Unix timestamp to readable format
+  String _formatUnixTimestamp(int timestamp) {
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    return "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}";
+  }
 }
+
+// class _DashboardState extends State<Dashboard> {
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+
+//     // Call DashboardServices to check token
+//     CheckSharedPreferences.checkTokenStatus(context);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
+//       context,
+//     );
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+//         title: Text(widget.title),
+//       ),
+//       body: Center(
+//         child: Column(
+//           children: [
+//             RoundButton(
+//               title: 'Get Events',
+//               loading:
+//                   Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
+//               onPress: () async {
+//                 // Getting Token
+//                 SharedPreferences sp = await SharedPreferences.getInstance();
+//                 String? token = sp.getString('token');
+//                 Map data = {'token': token};
+
+//                 // Hitting Get Events Api
+//                 final connectMoellimViewModel =
+//                     Provider.of<ConnectMoellimViewModel>(
+//                       context,
+//                       listen: false,
+//                     );
+//                 await connectMoellimViewModel.GetEventsApi(data, context);
+
+//                 // Getting Events Data from Shared Preferences
+//                 final eventViewModel = Provider.of<EventViewModel>(
+//                   context,
+//                   listen: false,
+//                 );
+//                 final event = await eventViewModel.getEvent();
+//                 if (event != null) {
+//                   print(
+//                     'Events extracted from shared preferences: ${event.toJson()}',
+//                   );
+//                 } else {
+//                   print('No event found in shared preferences');
+//                 }
+//               },
+//             ),
+
+//             //Future Builder
+//           ],
+//         ),
+//       ),
+
+//       floatingActionButton: SpeedDial(
+//         icon: Icons.add,
+//         activeIcon: Icons.close,
+//         backgroundColor: AppColors.primary,
+//         children: [
+//           SpeedDialChild(
+//             child: Icon(Icons.sync),
+//             label: 'Connect Moellim',
+//             onTap: () {
+//               Navigator.pushNamed(context, RoutesName.connectMoellim);
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
