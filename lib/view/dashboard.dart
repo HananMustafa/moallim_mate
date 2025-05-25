@@ -47,29 +47,85 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 252, 136, 58),
+        elevation: 0,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 1.2,
+            color: AppColors.whiteColor,
+          ),
+        ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            RoundButton(
-              title: 'Get Events',
-              loading: connectMoellimViewModel.getEventLoading,
-              onPress: () async {
-                SharedPreferences sp = await SharedPreferences.getInstance();
-                String? token = sp.getString('token');
-                Map data = {'token': token};
+            Align(
+              alignment: Alignment.topRight,
+              child: TextButton.icon(
+                onPressed:
+                    connectMoellimViewModel.getEventLoading
+                        ? null
+                        : () async {
+                          SharedPreferences sp =
+                              await SharedPreferences.getInstance();
+                          String? token = sp.getString('token');
+                          Map data = {'token': token};
 
-                await connectMoellimViewModel.GetEventsApi(data, context);
+                          await connectMoellimViewModel.GetEventsApi(
+                            data,
+                            context,
+                          );
 
-                setState(() {
-                  _futureEvents =
-                      fetchEvents(); // Trigger fetching after API call
-                });
-              },
+                          setState(() {
+                            _futureEvents =
+                                fetchEvents(); // Trigger fetching after API call
+                          });
+                        },
+                icon:
+                    connectMoellimViewModel.getEventLoading
+                        ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                        : const Icon(Icons.refresh, color: AppColors.primary),
+                label: Text(
+                  connectMoellimViewModel.getEventLoading
+                      ? 'Refreshing...'
+                      : 'Refresh',
+                  style: TextStyle(
+                    color:
+                        connectMoellimViewModel.getEventLoading
+                            ? Colors.grey
+                            : AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  backgroundColor: const Color.fromARGB(
+                    255,
+                    243,
+                    135,
+                    33,
+                  ).withOpacity(0.1),
+                ),
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 4),
 
             /// Display events using FutureBuilder
             Expanded(
@@ -95,11 +151,14 @@ class _DashboardState extends State<Dashboard> {
                             itemBuilder: (context, index) {
                               final event = events[index];
                               return Card(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 16,
+                                // margin: const EdgeInsets.symmetric(
+                                //   vertical: 8,
+                                //   horizontal: 16,
+                                // ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                                elevation: 4,
+                                elevation: 2,
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
@@ -122,7 +181,7 @@ class _DashboardState extends State<Dashboard> {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 6),
                                       Text.rich(
                                         TextSpan(
                                           children: [
@@ -136,7 +195,7 @@ class _DashboardState extends State<Dashboard> {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 6),
                                       Text.rich(
                                         TextSpan(
                                           children: [
@@ -152,7 +211,7 @@ class _DashboardState extends State<Dashboard> {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 6),
                                       Text.rich(
                                         TextSpan(
                                           children: [
@@ -168,7 +227,7 @@ class _DashboardState extends State<Dashboard> {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 6),
                                       Text.rich(
                                         TextSpan(
                                           children: [
@@ -202,6 +261,7 @@ class _DashboardState extends State<Dashboard> {
         icon: Icons.add,
         activeIcon: Icons.close,
         backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.whiteColor,
         children: [
           SpeedDialChild(
             child: const Icon(Icons.sync),

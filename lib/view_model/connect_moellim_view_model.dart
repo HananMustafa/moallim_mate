@@ -32,7 +32,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
         .then((value) async {
           setLoading(false);
           print(value.toString());
-          Utils.flushbarSuccessMessages(value.toString(), context);
+          Utils.flushbarSuccessMessages('Credentials Saved!', context);
 
           String token = value['token'];
           String username = value['username'];
@@ -45,7 +45,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
         })
         .onError((error, stackTrace) {
           setLoading(false);
-          Utils.flushbarErrorMessages(error.toString(), context);
+          Utils.flushbarErrorMessages('Something went wrong!', context);
         });
   }
 
@@ -67,12 +67,9 @@ class ConnectMoellimViewModel with ChangeNotifier {
 
       print('Saved EventModel: ${eventModel.toJson()}');
 
-      Utils.flushbarSuccessMessages(
-        'Events Saved to SharedPreferences',
-        context,
-      );
+      Utils.flushbarSuccessMessages('Events Loaded Successfully!', context);
     } catch (error) {
-      Utils.flushbarErrorMessages(error.toString(), context);
+      Utils.flushbarErrorMessages('Something went wrong!', context);
     } finally {
       setGetEventLoading(false);
     }

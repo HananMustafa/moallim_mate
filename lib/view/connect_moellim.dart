@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/res/components/build_info_row.dart';
 import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
@@ -28,7 +29,7 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
     final credentials = await CheckSharedPreferences.checkCredentialsStatus();
     setState(() {
       username = credentials['username']!;
-      password = credentials['password']!;
+      password = '********';
     });
   }
 
@@ -69,8 +70,21 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Connect Moellim'),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 252, 136, 58),
+        elevation: 0,
+        title: Text(
+          'Connect Moellim',
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 1.2,
+            color: AppColors.whiteColor,
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.whiteColor, // Set your desired color here
+        ),
       ),
 
       body: Padding(
