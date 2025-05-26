@@ -45,7 +45,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
         })
         .onError((error, stackTrace) {
           setLoading(false);
-          Utils.flushbarErrorMessages('Something went wrong!', context);
+          Utils.flushbarErrorMessages(error.toString(), context);
         });
   }
 
@@ -69,7 +69,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
 
       Utils.flushbarSuccessMessages('Events Loaded Successfully!', context);
     } catch (error) {
-      Utils.flushbarErrorMessages('Something went wrong!', context);
+      Utils.flushbarErrorMessages(error.toString(), context);
     } finally {
       setGetEventLoading(false);
     }

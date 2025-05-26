@@ -30,7 +30,6 @@ class NetworkApiService extends BaseApiServices {
           .timeout(Duration(seconds: 10));
 
       responseJson = returnResponse(response);
-      print('response json::: $responseJson');
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
@@ -44,7 +43,8 @@ class NetworkApiService extends BaseApiServices {
         return responseJson;
 
       case 400:
-        throw BadRequestException(response.body.toString());
+        final decodedJson = json.decode(response.body);
+        throw BadRequestException(decodedJson['message'] ?? '');
 
       case 404:
         throw UnauthorizedException(response.body.toString());
