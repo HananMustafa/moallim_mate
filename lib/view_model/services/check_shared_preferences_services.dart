@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moallim_mate/res/components/dialog_box.dart';
+import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
 import 'package:moallim_mate/view_model/user_view_model.dart';
 
 class CheckSharedPreferences {
@@ -9,16 +10,11 @@ class CheckSharedPreferences {
 
     // Show dialog depending on token presence
     if (user.token == '' || user.token == 'null') {
-      showDialog(
-        context: context,
-        builder: (context) => DialogBox(message: 'Connect Moellim first'),
-      );
-      // DialogBox(message: 'Connect Moellim first');
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => DialogBox(message: 'Moellim is Connected'),
-      );
+      // showDialog(
+      //   context: context,
+      //   builder: (context) => DialogBox(message: 'Connect Moellim first'),
+      // );
+      CredentialsDialogHelper.show(context);
     }
   }
 

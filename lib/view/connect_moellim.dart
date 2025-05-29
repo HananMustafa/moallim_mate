@@ -5,6 +5,7 @@ import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
+import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
 import 'package:provider/provider.dart';
 
 class ConnectMoellim extends StatefulWidget {
@@ -39,34 +40,34 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
       context,
     );
 
-    void _showCredentialDialog(BuildContext context) {
-      final usernameController = TextEditingController();
-      final passwordController = TextEditingController();
+    // void _showCredentialDialog(BuildContext context) {
+    //   final usernameController = TextEditingController();
+    //   final passwordController = TextEditingController();
 
-      showDialog(
-        context: context,
-        builder: (context) {
-          return CredentialsDialog(
-            usernameController: usernameController,
-            passwordController: passwordController,
-            onSave: () async {
-              print('USERNAME: ${usernameController.text.toString()}');
-              print('PASSWORD: ${passwordController.text.toString()}');
-              Map data = {
-                'username': usernameController.text.toString(),
-                'password': passwordController.text.toString(),
-              };
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return CredentialsDialog(
+    //         usernameController: usernameController,
+    //         passwordController: passwordController,
+    //         onSave: () async {
+    //           print('USERNAME: ${usernameController.text.toString()}');
+    //           print('PASSWORD: ${passwordController.text.toString()}');
+    //           Map data = {
+    //             'username': usernameController.text.toString(),
+    //             'password': passwordController.text.toString(),
+    //           };
 
-              final connectMoellimViewModel =
-                  Provider.of<ConnectMoellimViewModel>(context, listen: false);
-              await connectMoellimViewModel.ConnectMoellimApi(data, context);
-              // print('Api hit');
-              // Navigator.of(context).pop();
-            },
-          );
-        },
-      );
-    }
+    //           final connectMoellimViewModel =
+    //               Provider.of<ConnectMoellimViewModel>(context, listen: false);
+    //           await connectMoellimViewModel.ConnectMoellimApi(data, context);
+    //           // print('Api hit');
+    //           // Navigator.of(context).pop();
+    //         },
+    //       );
+    //     },
+    //   );
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +118,7 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             RoundButton(
               title: 'Update',
               onPress: () {
-                _showCredentialDialog(context);
+                CredentialsDialogHelper.show(context);
               },
             ),
           ],
