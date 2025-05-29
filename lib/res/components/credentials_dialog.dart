@@ -21,7 +21,7 @@ class CredentialsDialog extends StatelessWidget {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       title: Center(
-        child: Text('Update Credentials', style: TextStyle(fontSize: 16)),
+        child: Text('Set New Credentials', style: TextStyle(fontSize: 16)),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,10 +36,12 @@ class CredentialsDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        RoundButton(
-          title: 'Save',
-          loading: Provider.of<ConnectMoellimViewModel>(context).loading,
-          onPress: onSave,
+        Center(
+          child: RoundButton(
+            title: 'Save',
+            loading: Provider.of<ConnectMoellimViewModel>(context).loading,
+            onPress: onSave,
+          ),
         ),
       ],
     );
