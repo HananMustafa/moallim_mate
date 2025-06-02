@@ -7,6 +7,7 @@ import 'package:moallim_mate/utils/utils.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/event_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
+import 'package:moallim_mate/view_model/services/notification_services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,9 +23,12 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   Future<List<dynamic>>? _futureEvents;
 
+  NotificationServices notificationServices = NotificationServices();
+
   @override
   void initState() {
     super.initState();
+    notificationServices.requestNotificationPermission();
     CheckSharedPreferences.checkTokenStatus(context);
     _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
   }
