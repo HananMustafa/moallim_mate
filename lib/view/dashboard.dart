@@ -29,6 +29,11 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     notificationServices.requestNotificationPermission();
+    // notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value) {
+      print('Device token: $value');
+    });
+
     CheckSharedPreferences.checkTokenStatus(context);
     _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
   }
