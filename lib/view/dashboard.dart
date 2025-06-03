@@ -29,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit(context);
     // notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken().then((value) {
       print('Device token: $value');
