@@ -6,6 +6,7 @@ import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
+import 'package:moallim_mate/view_model/services/notification_services.dart';
 import 'package:provider/provider.dart';
 
 class ConnectMoellim extends StatefulWidget {
@@ -16,13 +17,18 @@ class ConnectMoellim extends StatefulWidget {
 }
 
 class _ConnectMoellimState extends State<ConnectMoellim> {
+  NotificationServices notificationServices = NotificationServices();
   String username = '';
   String password = '';
+  String deviceToken = '';
 
   @override
   void initState() {
     super.initState();
     loadUserCredentials();
+    notificationServices.getDeviceToken().then((value) {
+      deviceToken = value;
+    });
   }
 
   // I AM REALLY SORRY FOR WRITING THIS CODE. PLEASE MODIFY IT, AND USE PROVIDER INSTEAD
@@ -118,7 +124,7 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             RoundButton(
               title: 'Update',
               onPress: () {
-                CredentialsDialogHelper.show(context);
+                CredentialsDialogHelper.show(context, deviceToken);
               },
             ),
           ],

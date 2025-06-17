@@ -4,7 +4,7 @@ import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 
 class CredentialsDialogHelper {
-  static void show(BuildContext context) {
+  static void show(BuildContext context, String deviceToken) {
     final usernameController = TextEditingController();
     final passwordController = TextEditingController();
 
@@ -20,6 +20,7 @@ class CredentialsDialogHelper {
             Map data = {
               'username': usernameController.text.toString(),
               'password': passwordController.text.toString(),
+              'deviceToken': deviceToken,
             };
 
             final connectMoellimViewModel =
