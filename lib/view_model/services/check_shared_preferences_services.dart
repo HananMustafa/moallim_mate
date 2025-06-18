@@ -30,11 +30,11 @@ class CheckSharedPreferences {
     final user = await userVM.getUser();
 
     if (user.token == null || user.token == '' || user.token == 'null') {
-      return {'username': 'username not set', 'password': 'password not set'};
+      return {'username': 'Not available'};
     } else {
       return {
-        'username': user.username ?? 'username not set',
-        'password': user.password ?? 'password not set',
+        'username': user.username ?? 'Not available',
+        'password': user.password ?? '**',
       };
     }
   }

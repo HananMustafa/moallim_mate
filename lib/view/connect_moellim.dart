@@ -18,9 +18,10 @@ class ConnectMoellim extends StatefulWidget {
 
 class _ConnectMoellimState extends State<ConnectMoellim> {
   NotificationServices notificationServices = NotificationServices();
-  String username = '';
-  String password = '';
+  String username = 'Not available';
+  String password = '********';
   String deviceToken = '';
+  bool isPlaceholder = true;
 
   @override
   void initState() {
@@ -34,10 +35,14 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
   // I AM REALLY SORRY FOR WRITING THIS CODE. PLEASE MODIFY IT, AND USE PROVIDER INSTEAD
   void loadUserCredentials() async {
     final credentials = await CheckSharedPreferences.checkCredentialsStatus();
-    setState(() {
-      username = credentials['username']!;
-      password = '********';
-    });
+
+    if (credentials['username'] != 'Not available') {
+      setState(() {
+        username = credentials['username']!;
+        password = '********';
+        isPlaceholder = false;
+      });
+    }
   }
 
   @override
@@ -112,9 +117,17 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BuildInfoRow(title: 'Username', value: username),
+                    BuildInfoRow(
+                      title: 'Username',
+                      value: username,
+                      isPlaceholder: isPlaceholder,
+                    ),
                     SizedBox(height: 16),
-                    BuildInfoRow(title: 'Password', value: password),
+                    BuildInfoRow(
+                      title: 'Password',
+                      value: password,
+                      isPlaceholder: isPlaceholder,
+                    ),
                   ],
                 ),
               ),

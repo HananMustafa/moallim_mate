@@ -69,7 +69,8 @@ class ConnectMoellimViewModel with ChangeNotifier {
 
       Utils.flushbarSuccessMessages('Events Loaded Successfully!', context);
     } catch (error) {
-      Utils.flushbarErrorMessages(error.toString(), context);
+      // Utils.flushbarErrorMessages(error.toString(), context);
+      Utils.flushbarErrorMessages('Connect Moellim first', context);
     } finally {
       setGetEventLoading(false);
     }
