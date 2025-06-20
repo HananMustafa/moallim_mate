@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:moallim_mate/res/color.dart';
-import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
-import 'package:moallim_mate/utils/utils.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/event_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
@@ -21,6 +20,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  BannerAd? _bannerAd;
+  InterstitialAd? _interstitialAd;
+
   Future<List<dynamic>>? _futureEvents;
 
   NotificationServices notificationServices = NotificationServices();
@@ -37,6 +39,43 @@ class _DashboardState extends State<Dashboard> {
 
     CheckSharedPreferences.checkTokenStatus(context);
     _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
+
+    // DISPLAY BANNER AD
+    BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/9214589741',
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+
+    // DISPLAY INTERSTITIAL AD
+    InterstitialAd.load(
+      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {},
+          );
+          setState(() {
+            _interstitialAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial Ad: ${err.message}');
+        },
+      ),
+    );
   }
 
   Future<List<dynamic>> fetchEvents() async {
@@ -71,10 +110,21 @@ class _DashboardState extends State<Dashboard> {
           ),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            if (_bannerAd != null)
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                ),
+              ),
+
             Align(
               alignment: Alignment.topRight,
               child: TextButton.icon(
@@ -278,6 +328,13 @@ class _DashboardState extends State<Dashboard> {
             label: 'Connect Moellim',
             onTap: () {
               Navigator.pushNamed(context, RoutesName.connectMoellim);
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.ad_units),
+            label: 'Show Ad',
+            onTap: () {
+              _interstitialAd?.show();
             },
           ),
         ],

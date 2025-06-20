@@ -37,7 +37,7 @@ class NotificationServices {
     RemoteMessage message,
   ) async {
     var androidInitializationSettings = const AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      '@drawable/notification_icon',
     );
     var iosInitializationSettings = const DarwinInitializationSettings();
 
