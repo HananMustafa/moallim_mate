@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/res/components/build_info_row.dart';
-import 'package:moallim_mate/res/components/credentials_dialog.dart';
 import 'package:moallim_mate/res/components/round_button.dart';
-import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
 import 'package:moallim_mate/view_model/services/notification_services.dart';
-import 'package:provider/provider.dart';
 
 class ConnectMoellim extends StatefulWidget {
   const ConnectMoellim({super.key});
@@ -47,39 +44,6 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
 
   @override
   Widget build(BuildContext context) {
-    final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
-      context,
-    );
-
-    // void _showCredentialDialog(BuildContext context) {
-    //   final usernameController = TextEditingController();
-    //   final passwordController = TextEditingController();
-
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return CredentialsDialog(
-    //         usernameController: usernameController,
-    //         passwordController: passwordController,
-    //         onSave: () async {
-    //           print('USERNAME: ${usernameController.text.toString()}');
-    //           print('PASSWORD: ${passwordController.text.toString()}');
-    //           Map data = {
-    //             'username': usernameController.text.toString(),
-    //             'password': passwordController.text.toString(),
-    //           };
-
-    //           final connectMoellimViewModel =
-    //               Provider.of<ConnectMoellimViewModel>(context, listen: false);
-    //           await connectMoellimViewModel.ConnectMoellimApi(data, context);
-    //           // print('Api hit');
-    //           // Navigator.of(context).pop();
-    //         },
-    //       );
-    //     },
-    //   );
-    // }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

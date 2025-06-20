@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moallim_mate/res/components/dialog_box.dart';
 import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
 import 'package:moallim_mate/view_model/services/notification_services.dart';
 import 'package:moallim_mate/view_model/user_view_model.dart';
