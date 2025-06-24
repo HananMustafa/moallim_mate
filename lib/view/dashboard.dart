@@ -99,7 +99,7 @@ class _DashboardState extends State<Dashboard> {
         'coursefullname': 'Introduction to Flutter',
         'name': 'Assignment 1: Widgets',
         'modulename': 'Assignment',
-        'description': 'Build a UI using basic widgets.',
+        'description': 'Dummy data for testers',
         'timestart':
             DateTime.now().add(Duration(days: 3)).millisecondsSinceEpoch ~/
             1000,
@@ -108,43 +108,7 @@ class _DashboardState extends State<Dashboard> {
         'coursefullname': 'Mobile App Development',
         'name': 'Quiz 1: Dart Basics',
         'modulename': 'Quiz',
-        'description': 'Covers variables, functions, and control flow.',
-        'timestart':
-            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
-            1000,
-      },
-      {
-        'coursefullname': 'Mobile App Development',
-        'name': 'Quiz 1: Dart Basics',
-        'modulename': 'Quiz',
-        'description': 'Covers variables, functions, and control flow.',
-        'timestart':
-            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
-            1000,
-      },
-      {
-        'coursefullname': 'Mobile App Development',
-        'name': 'Quiz 1: Dart Basics',
-        'modulename': 'Quiz',
-        'description': 'Covers variables, functions, and control flow.',
-        'timestart':
-            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
-            1000,
-      },
-      {
-        'coursefullname': 'Mobile App Development',
-        'name': 'Quiz 1: Dart Basics',
-        'modulename': 'Quiz',
-        'description': 'Covers variables, functions, and control flow.',
-        'timestart':
-            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
-            1000,
-      },
-      {
-        'coursefullname': 'Mobile App Development',
-        'name': 'Quiz 1: Dart Basics',
-        'modulename': 'Quiz',
-        'description': 'Covers variables, functions, and control flow.',
+        'description': 'Dummy data for testers',
         'timestart':
             DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
             1000,
