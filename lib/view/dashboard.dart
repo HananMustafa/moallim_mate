@@ -85,7 +85,69 @@ class _DashboardState extends State<Dashboard> {
       // Assuming `event.toJson()` returns a map with 'json' as key
       return event.toJson()['json'] ?? [];
     }
-    return [];
+    // return [];
+    // Return dummy events if `event` is null
+    return _getDummyEvents();
+  }
+
+  /// Dummy data for testing
+  List<Map<String, dynamic>> _getDummyEvents() {
+    return [
+      {
+        'coursefullname': 'Introduction to Flutter',
+        'name': 'Assignment 1: Widgets',
+        'modulename': 'Assignment',
+        'description': 'Build a UI using basic widgets.',
+        'timestart':
+            DateTime.now().add(Duration(days: 3)).millisecondsSinceEpoch ~/
+            1000,
+      },
+      {
+        'coursefullname': 'Mobile App Development',
+        'name': 'Quiz 1: Dart Basics',
+        'modulename': 'Quiz',
+        'description': 'Covers variables, functions, and control flow.',
+        'timestart':
+            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
+            1000,
+      },
+      {
+        'coursefullname': 'Mobile App Development',
+        'name': 'Quiz 1: Dart Basics',
+        'modulename': 'Quiz',
+        'description': 'Covers variables, functions, and control flow.',
+        'timestart':
+            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
+            1000,
+      },
+      {
+        'coursefullname': 'Mobile App Development',
+        'name': 'Quiz 1: Dart Basics',
+        'modulename': 'Quiz',
+        'description': 'Covers variables, functions, and control flow.',
+        'timestart':
+            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
+            1000,
+      },
+      {
+        'coursefullname': 'Mobile App Development',
+        'name': 'Quiz 1: Dart Basics',
+        'modulename': 'Quiz',
+        'description': 'Covers variables, functions, and control flow.',
+        'timestart':
+            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
+            1000,
+      },
+      {
+        'coursefullname': 'Mobile App Development',
+        'name': 'Quiz 1: Dart Basics',
+        'modulename': 'Quiz',
+        'description': 'Covers variables, functions, and control flow.',
+        'timestart':
+            DateTime.now().add(Duration(days: 5)).millisecondsSinceEpoch ~/
+            1000,
+      },
+    ];
   }
 
   @override
@@ -191,13 +253,15 @@ class _DashboardState extends State<Dashboard> {
             Expanded(
               child:
                   _futureEvents == null
-                      ? Text('Press the button to load events.')
+                      ? const Text('Press the button to load events.')
                       : FutureBuilder<List<dynamic>>(
                         future: _futureEvents,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (!snapshot.hasData ||
@@ -211,98 +275,88 @@ class _DashboardState extends State<Dashboard> {
                             itemBuilder: (context, index) {
                               final event = events[index];
                               return Card(
-                                // margin: const EdgeInsets.symmetric(
-                                //   vertical: 8,
-                                //   horizontal: 16,
-                                // ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                elevation: 2,
+                                elevation: 3,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Course Name: ",
-                                              style: TextStyle(
+                                      /// Top Row: Logo + Module Name
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.event_note,
+                                            size: 22,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text(
+                                              event['modulename'] ?? '',
+                                              style: const TextStyle(
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            TextSpan(
-                                              text:
-                                                  event['coursefullname'] ?? '',
-                                            ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 12),
+
+                                      /// Course Name (highlighted)
+                                      Text(
+                                        event['coursefullname'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       const SizedBox(height: 6),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Title: ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(text: event['name'] ?? ''),
-                                          ],
+
+                                      /// Title (highlighted)
+                                      Text(
+                                        event['name'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       const SizedBox(height: 6),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Type: ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: event['modulename'] ?? '',
-                                            ),
-                                          ],
+
+                                      /// Instructions (low priority)
+                                      if (event['description'] != null &&
+                                          event['description']
+                                              .toString()
+                                              .trim()
+                                              .isNotEmpty)
+                                        Text(
+                                          event['description'],
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.grey,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Instructions: ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: event['description'] ?? '',
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Due Date: ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: _formatUnixTimestamp(
-                                                event['timestart'],
-                                              ),
-                                            ),
-                                          ],
+                                      const SizedBox(height: 12),
+
+                                      /// Due Date (bottom left, highlighted)
+                                      Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          _formatUnixTimestamp(
+                                            event['timestart'],
+                                          ),
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -345,7 +399,32 @@ class _DashboardState extends State<Dashboard> {
   /// Converts Unix timestamp to readable format
   String _formatUnixTimestamp(int timestamp) {
     final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-    return "${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}";
+    final day = date.day;
+    final month = _monthName(date.month);
+    final hour =
+        date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour);
+    final minute = date.minute.toString().padLeft(2, '0');
+    final ampm = date.hour >= 12 ? 'pm' : 'am';
+
+    return "$day $month $hour:$minute$ampm";
+  }
+
+  String _monthName(int month) {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    return months[month - 1];
   }
 }
 
