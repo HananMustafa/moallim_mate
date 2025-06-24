@@ -37,6 +37,10 @@
             android:value="high_importance_channel" />
 
         <!-- Android Ads ID -->
+        <!-- 
+        Original ID: ca-app-pub-4820995219603571~5128481208
+        Testing ID: ca-app-pub-3940256099942544~3347511713 
+        -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>

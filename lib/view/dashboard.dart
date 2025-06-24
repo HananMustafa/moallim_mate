@@ -41,6 +41,8 @@ class _DashboardState extends State<Dashboard> {
     _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
 
     // DISPLAY BANNER AD
+    // Original ID: ca-app-pub-4820995219603571/8240911467
+    // Testing ID: ca-app-pub-3940256099942544/9214589741
     BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/9214589741',
       request: AdRequest(),
