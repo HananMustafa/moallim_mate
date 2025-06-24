@@ -46,6 +46,7 @@ dependencies:
   app_settings: ^6.1.1
   flutter_launcher_icons: ^0.14.4 #app icon
   google_mobile_ads: ^6.0.0 #To display ads
+  package_info_plus: ^8.3.0 #To fetch the version number of app
 
 
 flutter_icons:
