@@ -43,7 +43,7 @@ class _DashboardState extends State<Dashboard> {
     // Original ID: ca-app-pub-4820995219603571/8240911467
     // Testing ID: ca-app-pub-3940256099942544/9214589741
     BannerAd(
-      adUnitId: 'ca-app-pub-4820995219603571/8240911467',
+      adUnitId: 'ca-app-pub-3940256099942544/9214589741',
       request: AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -63,7 +63,7 @@ class _DashboardState extends State<Dashboard> {
     // Original ID: ca-app-pub-4820995219603571/6921882944
     // Testing ID: ca-app-pub-3940256099942544/1033173712
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-4820995219603571/6921882944',
+      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
