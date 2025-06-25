@@ -5,7 +5,6 @@ import 'package:moallim_mate/res/color.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/event_view_model.dart';
-import 'package:moallim_mate/view_model/services/check_shared_preferences_services.dart';
 import 'package:moallim_mate/view_model/services/notification_services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +36,7 @@ class _DashboardState extends State<Dashboard> {
       print('Device token: $value');
     });
 
-    CheckSharedPreferences.checkTokenStatus(context);
+    // CheckSharedPreferences.checkTokenStatus(context);
     _futureEvents = fetchEvents(); // Fetching Events from Shared Preferences
 
     // DISPLAY BANNER AD
@@ -61,8 +60,10 @@ class _DashboardState extends State<Dashboard> {
     ).load();
 
     // DISPLAY INTERSTITIAL AD
+    // Original ID: ca-app-pub-4820995219603571/6921882944
+    // Testing ID: ca-app-pub-3940256099942544/1033173712
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: 'ca-app-pub-4820995219603571/6921882944',
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
