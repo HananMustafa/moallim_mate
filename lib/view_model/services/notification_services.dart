@@ -77,7 +77,7 @@ class NotificationServices {
           channelDescription: 'Your channel description',
           importance: Importance.high,
           priority: Priority.high,
-          ticker: 'tikcer',
+          ticker: 'ticker',
         );
 
     const DarwinNotificationDetails darwinNotificationDetails =
