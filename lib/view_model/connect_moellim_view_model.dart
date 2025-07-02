@@ -16,6 +16,12 @@ class ConnectMoellimViewModel with ChangeNotifier {
   bool _getEventLoading = false;
   bool get getEventLoading => _getEventLoading;
 
+  String _username = 'Not available';
+  String get username => _username;
+
+  bool _isPlaceholder = true;
+  bool get isPlaceholder => _isPlaceholder;
+
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
@@ -23,6 +29,14 @@ class ConnectMoellimViewModel with ChangeNotifier {
 
   setGetEventLoading(bool value) {
     _getEventLoading = value;
+    notifyListeners();
+  }
+
+  Future<void> loadUserCredentials() async {
+    final sp = await SharedPreferences.getInstance();
+    final name = sp.getString('username') ?? 'Not available';
+    _username = name;
+    _isPlaceholder = name == 'Not available';
     notifyListeners();
   }
 
@@ -43,6 +57,13 @@ class ConnectMoellimViewModel with ChangeNotifier {
           sp.setString('token', token.toString());
           sp.setString('username', username.toString());
           sp.setString('password', password.toString());
+
+          // Update provider values
+          _username = username;
+          _isPlaceholder = false;
+          notifyListeners();
+
+          // Navigator.of(context).pop(); // close dialog
         })
         .onError((error, stackTrace) {
           setLoading(false);

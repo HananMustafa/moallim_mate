@@ -24,8 +24,6 @@ class CredentialsDialogHelper {
             final connectMoellimViewModel =
                 Provider.of<ConnectMoellimViewModel>(context, listen: false);
             await connectMoellimViewModel.connectMoellimApi(data, context);
-            // print('Api hit');
-            // Navigator.of(context).pop();
           },
         );
       },
