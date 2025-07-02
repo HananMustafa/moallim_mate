@@ -168,6 +168,7 @@ class _DashboardState extends State<Dashboard> {
                     connectMoellimViewModel.getEventLoading
                         ? null
                         : () async {
+                          _interstitialAd?.show();
                           SharedPreferences sp =
                               await SharedPreferences.getInstance();
                           String? token = sp.getString('token');
@@ -359,13 +360,6 @@ class _DashboardState extends State<Dashboard> {
               Navigator.pushNamed(context, RoutesName.connectMoellim);
             },
           ),
-          SpeedDialChild(
-            child: const Icon(Icons.ad_units),
-            label: 'Show Ad',
-            onTap: () {
-              _interstitialAd?.show();
-            },
-          ),
         ],
       ),
     );
@@ -402,84 +396,3 @@ class _DashboardState extends State<Dashboard> {
     return months[month - 1];
   }
 }
-
-// class _DashboardState extends State<Dashboard> {
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-
-//     // Call DashboardServices to check token
-//     CheckSharedPreferences.checkTokenStatus(context);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final connectMoellimViewModel = Provider.of<ConnectMoellimViewModel>(
-//       context,
-//     );
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             RoundButton(
-//               title: 'Get Events',
-//               loading:
-//                   Provider.of<ConnectMoellimViewModel>(context).getEventLoading,
-//               onPress: () async {
-//                 // Getting Token
-//                 SharedPreferences sp = await SharedPreferences.getInstance();
-//                 String? token = sp.getString('token');
-//                 Map data = {'token': token};
-
-//                 // Hitting Get Events Api
-//                 final connectMoellimViewModel =
-//                     Provider.of<ConnectMoellimViewModel>(
-//                       context,
-//                       listen: false,
-//                     );
-//                 await connectMoellimViewModel.GetEventsApi(data, context);
-
-//                 // Getting Events Data from Shared Preferences
-//                 final eventViewModel = Provider.of<EventViewModel>(
-//                   context,
-//                   listen: false,
-//                 );
-//                 final event = await eventViewModel.getEvent();
-//                 if (event != null) {
-//                   print(
-//                     'Events extracted from shared preferences: ${event.toJson()}',
-//                   );
-//                 } else {
-//                   print('No event found in shared preferences');
-//                 }
-//               },
-//             ),
-
-//             //Future Builder
-//           ],
-//         ),
-//       ),
-
-//       floatingActionButton: SpeedDial(
-//         icon: Icons.add,
-//         activeIcon: Icons.close,
-//         backgroundColor: AppColors.primary,
-//         children: [
-//           SpeedDialChild(
-//             child: Icon(Icons.sync),
-//             label: 'Connect Moellim',
-//             onTap: () {
-//               Navigator.pushNamed(context, RoutesName.connectMoellim);
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
