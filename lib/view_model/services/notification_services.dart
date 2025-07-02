@@ -62,6 +62,7 @@ class NotificationServices {
   void firebaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
       if (Platform.isAndroid) {
+        if (!context.mounted) return;
         initLocalNotifications(context, message);
         showNotification(message);
       }

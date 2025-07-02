@@ -173,6 +173,7 @@ class _DashboardState extends State<Dashboard> {
                           String? token = sp.getString('token');
                           Map data = {'token': token};
 
+                          if (!context.mounted) return;
                           await connectMoellimViewModel.getEventsApi(
                             data,
                             context,

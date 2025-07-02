@@ -32,6 +32,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
         .connectMoellim(data)
         .then((value) async {
           setLoading(false);
+          if (!context.mounted) return;
           Utils.flushbarSuccessMessages('Credentials Saved!', context);
 
           String token = value['token'];
@@ -46,11 +47,13 @@ class ConnectMoellimViewModel with ChangeNotifier {
         .onError((error, stackTrace) {
           setLoading(false);
           if (error is TimeoutException) {
+            if (!context.mounted) return;
             Utils.flushbarErrorMessages(
               'Timed Out! Please try again later',
               context,
             );
           } else {
+            if (!context.mounted) return;
             Utils.flushbarErrorMessages(error.toString(), context);
           }
         });
@@ -72,11 +75,13 @@ class ConnectMoellimViewModel with ChangeNotifier {
       EventModel eventModel = EventModel.fromJson(value);
 
       // Await saving to SharedPreferences
+      if (!context.mounted) return;
       await Provider.of<EventViewModel>(
         context,
         listen: false,
       ).saveEvent(eventModel);
 
+      if (!context.mounted) return;
       Utils.flushbarSuccessMessages('Events Loaded Successfully!', context);
     } catch (error) {
       String message;
