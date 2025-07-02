@@ -134,7 +134,7 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 252, 136, 58),
+        backgroundColor: AppColors.primaryBackground,
         elevation: 0,
         title: Text(
           widget.title,
@@ -142,7 +142,7 @@ class _DashboardState extends State<Dashboard> {
             fontSize: 22,
             fontWeight: FontWeight.w400,
             letterSpacing: 1.2,
-            color: AppColors.whiteColor,
+            color: AppColors.white,
           ),
         ),
       ),
@@ -214,12 +214,9 @@ class _DashboardState extends State<Dashboard> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  backgroundColor: const Color.fromARGB(
-                    255,
-                    243,
-                    135,
-                    33,
-                  ).withAlpha((0.1 * 255).round()),
+                  backgroundColor: AppColors.primaryBackground.withAlpha(
+                    (0.1 * 255).round(),
+                  ),
                 ),
               ),
             ),
@@ -316,7 +313,7 @@ class _DashboardState extends State<Dashboard> {
                                           event['description'],
                                           style: const TextStyle(
                                             fontSize: 13,
-                                            color: Colors.grey,
+                                            color: AppColors.grey,
                                           ),
                                         ),
                                       const SizedBox(height: 12),
@@ -331,7 +328,7 @@ class _DashboardState extends State<Dashboard> {
                                           style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
+                                            color: AppColors.black87,
                                           ),
                                         ),
                                       ),
@@ -351,7 +348,7 @@ class _DashboardState extends State<Dashboard> {
         icon: Icons.add,
         activeIcon: Icons.close,
         backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.whiteColor,
+        foregroundColor: AppColors.white,
         children: [
           SpeedDialChild(
             child: const Icon(Icons.sync),

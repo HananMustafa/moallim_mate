@@ -32,7 +32,7 @@ class BuildInfoRow extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: isPlaceholder ? AppColors.grey : AppColors.blackColor,
+            color: isPlaceholder ? AppColors.grey : AppColors.black,
             fontStyle: isPlaceholder ? FontStyle.italic : FontStyle.normal,
           ),
         ),

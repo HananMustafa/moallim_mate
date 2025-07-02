@@ -8,8 +8,8 @@ class Utils {
   static toastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
+      backgroundColor: AppColors.black,
+      textColor: AppColors.white,
       toastLength: Toast.LENGTH_LONG,
     );
   }
@@ -25,10 +25,10 @@ class Utils {
         duration: Duration(seconds: 3),
         borderRadius: BorderRadius.circular(8),
         flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: AppColors.red,
         reverseAnimationCurve: Curves.easeInOut,
         positionOffset: 20,
-        icon: Icon(Icons.error, size: 28, color: Colors.white),
+        icon: Icon(Icons.error, size: 28, color: AppColors.white),
       )..show(context),
     );
   }
@@ -44,10 +44,10 @@ class Utils {
         duration: Duration(seconds: 3),
         borderRadius: BorderRadius.circular(8),
         flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor: AppColors.greenColor,
+        backgroundColor: AppColors.green,
         reverseAnimationCurve: Curves.easeInOut,
         positionOffset: 20,
-        icon: Icon(Icons.error, size: 28, color: Colors.white),
+        icon: Icon(Icons.error, size: 28, color: AppColors.white),
       )..show(context),
     );
   }

@@ -39,7 +39,7 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 252, 136, 58),
+        backgroundColor: AppColors.primaryBackground,
         elevation: 0,
         title: Text(
           'Connect Moellim',
@@ -47,11 +47,11 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
             fontSize: 22,
             fontWeight: FontWeight.w400,
             letterSpacing: 1.2,
-            color: AppColors.whiteColor,
+            color: AppColors.white,
           ),
         ),
         iconTheme: IconThemeData(
-          color: AppColors.whiteColor, // Set your desired color here
+          color: AppColors.white, // Set your desired color here
         ),
       ),
 
