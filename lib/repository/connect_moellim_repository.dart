@@ -1,5 +1,5 @@
-import 'package:moallim_mate/data/network/BaseApiServices.dart';
-import 'package:moallim_mate/data/network/NetworkApiServices.dart';
+import 'package:moallim_mate/data/network/base_api_services.dart';
+import 'package:moallim_mate/data/network/network_api_services.dart';
 import 'package:moallim_mate/res/endpoints.dart';
 
 class ConnectMoellimRepository {
@@ -8,7 +8,7 @@ class ConnectMoellimRepository {
   Future<dynamic> connectMoellim(dynamic data) async {
     try {
       dynamic response = await _apiServices.getPostApiResponse(
-        endpoint.loginEndpoint,
+        Endpoint.loginEndpoint,
         data,
       );
       return response;
@@ -20,7 +20,7 @@ class ConnectMoellimRepository {
   Future<dynamic> getEvents(dynamic data) async {
     try {
       dynamic response = await _apiServices.getPostApiResponse(
-        endpoint.getEventsEndpoint,
+        Endpoint.getEventsEndpoint,
         data,
       );
       return response;

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:moallim_mate/data/app_exceptions.dart';
-import 'package:moallim_mate/data/network/BaseApiServices.dart';
+import 'package:moallim_mate/data/network/base_api_services.dart';
 
 class NetworkApiService extends BaseApiServices {
   @override
@@ -49,11 +49,7 @@ class NetworkApiService extends BaseApiServices {
       case 404:
         throw UnauthorizedException(response.body.toString());
       default:
-        throw FetchDataException(
-          'Error occured while communicatuing with server' +
-              ' with status code' +
-              response.statusCode.toString(),
-        );
+        throw FetchDataException('Something went wrong...');
     }
   }
 }

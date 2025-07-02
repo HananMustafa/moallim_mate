@@ -21,13 +21,11 @@ class UserModel {
     password = json['password'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['message'] = this.message;
-    data['token'] = this.token;
-    data['username'] = this.username;
-    data['password'] = this.password;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    'success': success,
+    'message': message,
+    'token': token,
+    'username': username,
+    'password': password,
+  };
 }

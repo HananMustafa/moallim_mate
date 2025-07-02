@@ -10,11 +10,11 @@ class CredentialsDialog extends StatelessWidget {
   final VoidCallback onSave;
 
   const CredentialsDialog({
-    Key? key,
+    super.key,
     required this.usernameController,
     required this.passwordController,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

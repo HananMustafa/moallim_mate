@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -33,7 +34,9 @@ class _DashboardState extends State<Dashboard> {
     notificationServices.firebaseInit(context);
     // notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken().then((value) {
-      print('Device token: $value');
+      if (kDebugMode) {
+        print('Device token: $value');
+      }
     });
 
     // CheckSharedPreferences.checkTokenStatus(context);
@@ -53,7 +56,9 @@ class _DashboardState extends State<Dashboard> {
           });
         },
         onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
+          if (kDebugMode) {
+            print('Failed to load a banner ad: ${err.message}');
+          }
           ad.dispose();
         },
       ),
@@ -75,7 +80,9 @@ class _DashboardState extends State<Dashboard> {
           });
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial Ad: ${err.message}');
+          if (kDebugMode) {
+            print('Failed to load an interstitial Ad: ${err.message}');
+          }
         },
       ),
     );
@@ -147,7 +154,7 @@ class _DashboardState extends State<Dashboard> {
             if (_bannerAd != null)
               Align(
                 alignment: Alignment.topCenter,
-                child: Container(
+                child: SizedBox(
                   width: _bannerAd!.size.width.toDouble(),
                   height: _bannerAd!.size.height.toDouble(),
                   child: AdWidget(ad: _bannerAd!),
@@ -166,7 +173,7 @@ class _DashboardState extends State<Dashboard> {
                           String? token = sp.getString('token');
                           Map data = {'token': token};
 
-                          await connectMoellimViewModel.GetEventsApi(
+                          await connectMoellimViewModel.getEventsApi(
                             data,
                             context,
                           );
@@ -210,7 +217,7 @@ class _DashboardState extends State<Dashboard> {
                     243,
                     135,
                     33,
-                  ).withOpacity(0.1),
+                  ).withAlpha((0.1 * 255).round()),
                 ),
               ),
             ),

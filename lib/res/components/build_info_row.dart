@@ -7,11 +7,11 @@ class BuildInfoRow extends StatelessWidget {
   final bool isPlaceholder;
 
   const BuildInfoRow({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     required this.isPlaceholder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

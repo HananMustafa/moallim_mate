@@ -26,7 +26,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> ConnectMoellimApi(dynamic data, BuildContext context) async {
+  Future<void> connectMoellimApi(dynamic data, BuildContext context) async {
     setLoading(true);
     _myRepo
         .connectMoellim(data)
@@ -56,7 +56,7 @@ class ConnectMoellimViewModel with ChangeNotifier {
         });
   }
 
-  Future<void> GetEventsApi(dynamic data, BuildContext context) async {
+  Future<void> getEventsApi(dynamic data, BuildContext context) async {
     try {
       setGetEventLoading(true);
 

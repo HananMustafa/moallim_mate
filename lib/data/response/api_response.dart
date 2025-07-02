@@ -7,11 +7,11 @@ class ApiResponse<T> {
 
   ApiResponse(this.status, this.data, this.message);
 
-  ApiResponse.loading() : status = Status.LOADING;
+  ApiResponse.loading() : status = Status.loading;
 
-  ApiResponse.completed() : status = Status.COMPLETED;
+  ApiResponse.completed() : status = Status.completed;
 
-  ApiResponse.error() : status = Status.ERROR;
+  ApiResponse.error() : status = Status.error;
 
   @override
   String toString() {
