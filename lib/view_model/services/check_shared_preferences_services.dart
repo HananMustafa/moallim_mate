@@ -1,26 +1,6 @@
 import 'package:moallim_mate/view_model/user_view_model.dart';
 
 class CheckSharedPreferences {
-  // static Future<void> checkTokenStatus(BuildContext context) async {
-  //   UserViewModel userVM = UserViewModel();
-  //   final user = await userVM.getUser();
-
-  //   // Show dialog depending on token presence
-  //   if (user.token == '' || user.token == 'null') {
-  //     //GETTING DEVICE TOKEN
-  //     String deviceToken = '';
-  //     NotificationServices notificationServices = NotificationServices();
-  //     notificationServices.getDeviceToken().then((value) {
-  //       deviceToken = value;
-  //     });
-  //     // showDialog(
-  //     //   context: context,
-  //     //   builder: (context) => DialogBox(message: 'Connect Moellim first'),
-  //     // );
-  //     CredentialsDialogHelper.show(context, deviceToken);
-  //   }
-  // }
-
   static Future<Map<String, String>> checkCredentialsStatus() async {
     UserViewModel userVM = UserViewModel();
     final user = await userVM.getUser();

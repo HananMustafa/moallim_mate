@@ -5,6 +5,7 @@ import 'package:moallim_mate/utils/utils.dart';
 import 'package:moallim_mate/view_model/event_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 class ConnectMoellimViewModel with ChangeNotifier {
   final _myRepo = ConnectMoellimRepository();
@@ -31,7 +32,6 @@ class ConnectMoellimViewModel with ChangeNotifier {
         .connectMoellim(data)
         .then((value) async {
           setLoading(false);
-          print(value.toString());
           Utils.flushbarSuccessMessages('Credentials Saved!', context);
 
           String token = value['token'];
@@ -45,13 +45,25 @@ class ConnectMoellimViewModel with ChangeNotifier {
         })
         .onError((error, stackTrace) {
           setLoading(false);
-          Utils.flushbarErrorMessages(error.toString(), context);
+          if (error is TimeoutException) {
+            Utils.flushbarErrorMessages(
+              'Timed Out! Please try again later',
+              context,
+            );
+          } else {
+            Utils.flushbarErrorMessages(error.toString(), context);
+          }
         });
   }
 
   Future<void> GetEventsApi(dynamic data, BuildContext context) async {
     try {
       setGetEventLoading(true);
+
+      // Check if token exists and is not null
+      if (data['token'] == null || data['token'].toString().isEmpty) {
+        throw Exception('no_token');
+      }
 
       // Await the API call
       final value = await _myRepo.getEvents(data);
@@ -65,42 +77,24 @@ class ConnectMoellimViewModel with ChangeNotifier {
         listen: false,
       ).saveEvent(eventModel);
 
-      print('Saved EventModel: ${eventModel.toJson()}');
-
       Utils.flushbarSuccessMessages('Events Loaded Successfully!', context);
     } catch (error) {
-      // Utils.flushbarErrorMessages(error.toString(), context);
-      Utils.flushbarErrorMessages('Connect Moellim first', context);
+      String message;
+
+      if (error is TimeoutException) {
+        message = 'Timed Out! Please try again later';
+      } else if (error.toString().contains('no_token') ||
+          error.toString().contains(
+            "type 'Null' is not a subtype of type 'String'",
+          )) {
+        message = 'Connect Moellim first!';
+      } else {
+        message = 'Something went wrong!';
+      }
+
+      Utils.flushbarErrorMessages(message, context);
     } finally {
       setGetEventLoading(false);
     }
-
-    // setGetEventLoading(true);
-    // _myRepo
-    //     .getEvents(data)
-    //     .then((value) async {
-    //       setGetEventLoading(false);
-
-    //       // Parse the JSON to EventModel
-    //       EventModel eventModel = EventModel.fromJson(value);
-
-    //       // Save to shared preferences using EventViewModel
-    //       await Provider.of<EventViewModel>(
-    //         context,
-    //         listen: false,
-    //       ).saveEvent(eventModel);
-
-    //       // Print for debug
-    //       print('Saved EventModel: ${eventModel.toJson()}');
-
-    //       Utils.flushbarSuccessMessages(
-    //         'Events Saved to SharedPreferences',
-    //         context,
-    //       );
-    //     })
-    //     .onError((error, stackTrace) {
-    //       setGetEventLoading(false);
-    //       Utils.flushbarErrorMessages(error.toString(), context);
-    //     });
   }
 }

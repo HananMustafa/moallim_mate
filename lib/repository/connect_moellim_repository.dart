@@ -3,7 +3,7 @@ import 'package:moallim_mate/data/network/NetworkApiServices.dart';
 import 'package:moallim_mate/res/endpoints.dart';
 
 class ConnectMoellimRepository {
-  BaseApiServices _apiServices = NetworkApiService();
+  final BaseApiServices _apiServices = NetworkApiService();
 
   Future<dynamic> connectMoellim(dynamic data) async {
     try {
@@ -13,7 +13,7 @@ class ConnectMoellimRepository {
       );
       return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -25,7 +25,7 @@ class ConnectMoellimRepository {
       );
       return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

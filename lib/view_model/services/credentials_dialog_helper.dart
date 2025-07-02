@@ -15,8 +15,6 @@ class CredentialsDialogHelper {
           usernameController: usernameController,
           passwordController: passwordController,
           onSave: () async {
-            print('USERNAME: ${usernameController.text.toString()}');
-            print('PASSWORD: ${passwordController.text.toString()}');
             Map data = {
               'username': usernameController.text.toString(),
               'password': passwordController.text.toString(),
