@@ -22,13 +22,14 @@ class CredentialsDialog extends StatelessWidget {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      contentPadding: EdgeInsets.zero,
       content: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.only(
               top: 48.0,
-              left: 16,
-              right: 16,
+              left: 24,
+              right: 24,
               bottom: 24,
             ), // space for close icon
             child: Column(
@@ -59,7 +60,7 @@ class CredentialsDialog extends StatelessWidget {
             top: 0,
             left: 0,
             child: IconButton(
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.close, size: 22),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
