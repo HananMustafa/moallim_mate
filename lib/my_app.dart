@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // home: const Dashboard(title: 'Moallim Mate'),
-        initialRoute: RoutesName.splash,
+        initialRoute: RoutesName.dashboard,
         onGenerateRoute: Routes.generateRoute,
       ),
     );

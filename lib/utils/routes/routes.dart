@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:moallim_mate/utils/routes/routes_name.dart';
 import 'package:moallim_mate/view/connect_moellim.dart';
 import 'package:moallim_mate/view/dashboard.dart';
-import 'package:moallim_mate/view/splash_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,10 +16,10 @@ class Routes {
           builder: (BuildContext context) => ConnectMoellim(),
         );
 
-      case RoutesName.splash:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => SplashScreen(),
-        );
+      // case RoutesName.splash:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => SplashScreen(),
+      //   );
 
       //Add more cases
 
