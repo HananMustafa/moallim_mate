@@ -94,7 +94,7 @@ class _DashboardState extends State<Dashboard> {
 
     // Calling Show Case View
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showcaseviewServices.checkFirstLaunch(context, _one);
+      showcaseviewServices.checkFirstLaunchForDashboard(context, _one);
     });
   }
 
