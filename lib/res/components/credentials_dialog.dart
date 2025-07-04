@@ -41,12 +41,12 @@ class CredentialsDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 BuildInputField(
-                  label: 'Username',
+                  label: 'SAP ID (e.g., 27811)',
                   controller: usernameController,
                 ),
                 const SizedBox(height: 16),
                 BuildInputField(
-                  label: 'Password',
+                  label: 'Moellim Password',
                   controller: passwordController,
                   isPassword: true,
                 ),

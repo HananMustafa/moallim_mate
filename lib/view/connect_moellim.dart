@@ -5,7 +5,9 @@ import 'package:moallim_mate/res/components/round_button.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/services/credentials_dialog_helper.dart';
 import 'package:moallim_mate/view_model/services/notification_services.dart';
+import 'package:moallim_mate/view_model/services/showcaseview_services.dart';
 import 'package:provider/provider.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class ConnectMoellim extends StatefulWidget {
   const ConnectMoellim({super.key});
@@ -15,7 +17,9 @@ class ConnectMoellim extends StatefulWidget {
 }
 
 class _ConnectMoellimState extends State<ConnectMoellim> {
+  final GlobalKey _two = GlobalKey();
   NotificationServices notificationServices = NotificationServices();
+  ShowcaseviewServices showcaseviewServices = ShowcaseviewServices();
   String username = 'Not available';
   String deviceToken = '';
   bool isPlaceholder = true;
@@ -31,6 +35,11 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
     viewModel.loadUserCredentials();
     notificationServices.getDeviceToken().then((value) {
       deviceToken = value;
+    });
+
+    // Calling Show Case View
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showcaseviewServices.checkFirstLaunch(context, _two);
     });
   }
 
@@ -91,11 +100,15 @@ class _ConnectMoellimState extends State<ConnectMoellim> {
                   ),
                 ),
                 SizedBox(height: 16),
-                RoundButton(
-                  title: 'Update',
-                  onPress: () {
-                    CredentialsDialogHelper.show(context, deviceToken);
-                  },
+                Showcase(
+                  key: _two,
+                  description: 'Set Moellim Credentials',
+                  child: RoundButton(
+                    title: 'Update',
+                    onPress: () {
+                      CredentialsDialogHelper.show(context, deviceToken);
+                    },
+                  ),
                 ),
               ],
             );

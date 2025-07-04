@@ -7,8 +7,10 @@ import 'package:moallim_mate/utils/routes/routes_name.dart';
 import 'package:moallim_mate/view_model/connect_moellim_view_model.dart';
 import 'package:moallim_mate/view_model/event_view_model.dart';
 import 'package:moallim_mate/view_model/services/notification_services.dart';
+import 'package:moallim_mate/view_model/services/showcaseview_services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -20,12 +22,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final GlobalKey _one = GlobalKey();
+
   BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
 
   Future<List<dynamic>>? _futureEvents;
 
   NotificationServices notificationServices = NotificationServices();
+  ShowcaseviewServices showcaseviewServices = ShowcaseviewServices();
 
   @override
   void initState() {
@@ -86,6 +91,11 @@ class _DashboardState extends State<Dashboard> {
         },
       ),
     );
+
+    // Calling Show Case View
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showcaseviewServices.checkFirstLaunch(context, _one);
+    });
   }
 
   Future<List<dynamic>> fetchEvents() async {
@@ -344,20 +354,24 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
       ),
-      floatingActionButton: SpeedDial(
-        icon: Icons.add,
-        activeIcon: Icons.close,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.sync),
-            label: 'Connect Moellim',
-            onTap: () {
-              Navigator.pushNamed(context, RoutesName.connectMoellim);
-            },
-          ),
-        ],
+      floatingActionButton: Showcase(
+        key: _one,
+        description: 'Connect Moellim from here',
+        child: SpeedDial(
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.sync),
+              label: 'Connect Moellim',
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.connectMoellim);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
